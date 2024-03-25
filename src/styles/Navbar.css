@@ -1,0 +1,30 @@
+#navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: orange;
+    height: 8vh;
+    width: 100vw;
+}
+
+#navbar input {
+    border-radius: 10px;
+    width: 200px;
+    height: 30px;
+    border: none;
+}
+
+#navbar #title {
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+#team-link {
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+#team-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

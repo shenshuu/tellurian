@@ -1,0 +1,11 @@
+#footer {
+    margin-top: -10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 12.6vh;
+    font-weight: 500;
+    background-color: orange;
+}
