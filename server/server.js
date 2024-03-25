@@ -1,15 +1,15 @@
 require('dotenv').config()
-const { codes } = require('./countryCodes.js')
 const express = require('express')
 const axios = require('axios')
+const cors = require('cors')
 const app = express()
+app.use(cors())
 
 app.get('/news', async (req, res) => {
-    console.log(req.body)
     try {
         const url = `https://newsdata.io/api/1/news?apikey=
                         ${process.env.NEWS_DATA_API_KEY}
-                        &country=${'us'}
+                        &country=${req.query.country}
                         &language=en
                         &full_content=1
                         &image=1

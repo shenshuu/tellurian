@@ -1,4 +1,4 @@
-const codes = 
+export const codes = 
 {
     "afghanistan": "af",
     "albania": "al",
@@ -201,5 +201,3 @@ const codes =
     "zambia": "zm",
     "zimbabwe": "zw"
 }
-
-module.exports = { codes }
