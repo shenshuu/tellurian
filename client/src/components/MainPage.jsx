@@ -5,8 +5,8 @@ import { useData } from '../utils/useData';
 
 const initialPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 const projection = geoOrthographic()
-  .scale(300)
-  .translate([300, 400])
+  .scale(250)
+  .translate([300, 300])
   .rotate([10, 10, 10]);
 
 const path = geoPath().projection(projection);
