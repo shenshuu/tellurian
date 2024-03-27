@@ -4,6 +4,7 @@ export const ArticlesContainer = () => {
         <>
             <div id="articles-container">
                 <Article />
+                <Article />
             </div>
         </>
     )
