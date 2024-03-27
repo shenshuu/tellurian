@@ -14,10 +14,20 @@ export const Country = ({country, d}) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                const articles = data.results.map(a => {
+                    return {
+                        articleId: a.article_id,
+                        title: a.title,
+                        imgUrl: a.image_url,
+                        pubDate: a.pubDate,
+                        author: a.creator ? a.creator[0] : 'Unknown',
+                        description: a.description,
+                        link: a.link,
+                    }
+                })
+                console.log(articles)
             })
             .catch(error => console.log('news fetching failed'))
-        console.log(event)
     }
 
     return (
