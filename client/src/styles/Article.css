@@ -16,6 +16,13 @@
     background-color: green;
 }
 
+.article-description {
+    background-color: aqua;
+    width: 465px;
+    padding: 0px;
+    margin: 0px;
+}
+
 .article-right {
     display: flex;
     flex-direction: column;
