@@ -1,7 +1,5 @@
-import { Footer } from './Footer';
-import { Navbar } from './Navbar';
 import { Country } from './Country';
-import { geoPath, select, geoOrthographic, geoGraticule, count } from 'd3';
+import { geoPath, select, geoOrthographic, geoGraticule } from 'd3';
 import { useState, useEffect, useCallback } from 'react';
 import { useData } from '../utils/useData';
 
@@ -19,11 +17,11 @@ const MainPage = () => {
   const [mouseDown, setMouseDown] = useState(false);
   const data = useData();
 
-  const handleMouseDown = useCallback(event => {
+  const handleMouseDown = useCallback(_ => {
     setMouseDown(true);
   }, []);
 
-  const handleMouseUp = useCallback(event => {
+  const handleMouseUp = useCallback(_ => {
     setMouseDown(false);
   }, []);
 
@@ -58,29 +56,24 @@ const MainPage = () => {
   }, [data, path]);
 
   return data && (
-    <div className="App">
-      <Navbar />
-      <div id="svg-container">
-        <svg
-          id='content'
-          width='100vw'
-          height='80vh'
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-        >
-          <rect width="100%" height="100%" fill="black" />
-          <g id='sphere-container'>
-            {data.countries.features.map((country, i) => {
-              const key = country.properties.name + i
-              return <Country key={key} d={path(country)} 
-                country={country} />
-            })}
-          </g>
-        </svg>
-
-      </div>
-      <Footer />
+    <div id="main-page-container">
+    <svg
+        id='content'
+        width='100vw'
+        height='80vh'
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+    >
+        <rect width="100%" height="100%" fill="black" />
+        <g id='sphere-container'>
+        {data.countries.features.map((country, i) => {
+            const key = country.properties.name + i
+            return <Country key={key} d={path(country)} 
+            country={country} />
+        })}
+        </g>
+    </svg>
     </div>
   );
 }

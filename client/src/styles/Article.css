@@ -1,0 +1,33 @@
+.article {
+    display: flex;
+    width: 100%;
+    height: 110px;
+}
+
+.article-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: red;
+    width: 300px;
+}
+
+.article-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: purple;
+    width: 150px;
+}
+
+.article-author {
+    color: #ccc;
+}
+
+.article-links {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
