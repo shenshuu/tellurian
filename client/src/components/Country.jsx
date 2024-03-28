@@ -26,7 +26,6 @@ export const Country = ({country, d, setArticles}) => {
                     }
                 })
                 setArticles(articles)
-                // console.log(articles)
             })
             .catch(error => console.log('news fetching failed'))
     }

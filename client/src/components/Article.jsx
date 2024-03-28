@@ -20,18 +20,24 @@ export const Article = ({ article }) => {
     return (
         <>
             <div className="article">
-                <div className="article-tab" onClick={handleClick}>
-                    {'>'}
-                </div>
+                {showDescription ?
+                    <div className="article-tab" onClick={handleClick}>
+                        &#9660;
+                    </div>
+                :
+                    <div className="article-tab" onClick={handleClick}>
+                        &#9650;
+                    </div>
+                }
                 <div className="article-left">
                     <h4>{title}</h4>
-                    <p className="article-author">{article.author}</p>
+                    <p className="article-author">{article.author + ', ' + article.pubDate}</p>
                 </div>
                 <div className="article-right">
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
-                        <a href={article.link} target="_blank">link</a>
-                        <a>save</a>
+                        <a href={article.link} target="_blank">&#x1f517;</a>
+                        <a>&#x1F516;</a>
                     </div>
                 </div>
             </div>
