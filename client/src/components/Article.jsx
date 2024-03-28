@@ -3,9 +3,18 @@ import { useState } from 'react'
 
 export const Article = ({ article }) => {
     const [showDescription, setShowDescription] = useState(false)
-    console.log(article)
     const handleClick = _ => {
         setShowDescription(!showDescription)
+    }
+
+    let title = '';
+    for (const word of article.title.split(' ')) {
+        if (title.length < 70) {
+            title += word + ' '
+        } else {
+            title += '...'
+            break
+        }
     }
 
     return (
@@ -15,7 +24,7 @@ export const Article = ({ article }) => {
                     {'>'}
                 </div>
                 <div className="article-left">
-                    <h4>{article.title}</h4>
+                    <h4>{title}</h4>
                     <p className="article-author">{article.author}</p>
                 </div>
                 <div className="article-right">

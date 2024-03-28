@@ -17,9 +17,11 @@
 }
 
 .article-description {
-    background-color: aqua;
+    background-color: white;
+    color: gray;
+    font-size: 10px;
     width: 465px;
-    padding: 0px;
+    padding: 3px;
     margin: 0px;
 }
 
