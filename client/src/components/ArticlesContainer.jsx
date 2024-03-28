@@ -1,10 +1,12 @@
+import { useEffect } from "react"
 import { Article } from "./Article"
-export const ArticlesContainer = () => {
-    return (
+export const ArticlesContainer = ({ articles }) => {
+    return articles && (
         <>
             <div id="articles-container">
-                <Article />
-                <Article />
+                {articles.map(article => (
+                    <Article key={article.articleId} article={article}/>
+                ))}
             </div>
         </>
     )

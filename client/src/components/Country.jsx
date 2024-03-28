@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { codes } from '../utils/countryCodes.js'
 
-export const Country = ({country, d}) => {
+export const Country = ({country, d, setArticles}) => {
     const [hovering, setHovering] = useState(false)
 
     const handleClick = event => {
@@ -25,7 +25,8 @@ export const Country = ({country, d}) => {
                         link: a.link,
                     }
                 })
-                console.log(articles)
+                setArticles(articles)
+                // console.log(articles)
             })
             .catch(error => console.log('news fetching failed'))
     }

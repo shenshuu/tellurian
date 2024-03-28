@@ -1,7 +1,9 @@
 import { Country } from './Country';
+import { ArticlesContainer } from './ArticlesContainer';
 import { geoPath, select, geoOrthographic, geoGraticule } from 'd3';
 import { useState, useEffect, useCallback } from 'react';
 import { useData } from '../utils/useData';
+import '../styles/MainPage.css';
 
 const initialPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 const projection = geoOrthographic()
@@ -15,6 +17,7 @@ const MainPage = () => {
 
   const [mousePosition, setMousePosition] = useState(initialPosition);
   const [mouseDown, setMouseDown] = useState(false);
+  const [articles, setArticles] = useState([]);
   const data = useData();
 
   const handleMouseDown = useCallback(_ => {
@@ -69,11 +72,12 @@ const MainPage = () => {
         <g id='sphere-container'>
         {data.countries.features.map((country, i) => {
             const key = country.properties.name + i
-            return <Country key={key} d={path(country)} 
+            return <Country setArticles={setArticles} key={key} d={path(country)} 
             country={country} />
         })}
         </g>
     </svg>
+    <ArticlesContainer articles={articles} />
     </div>
   );
 }
