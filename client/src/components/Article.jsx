@@ -9,7 +9,7 @@ export const Article = ({ article }) => {
 
     let title = '';
     for (const word of article.title.split(' ')) {
-        if (title.length < 70) {
+        if (title.length < 60) {
             title += word + ' '
         } else {
             title += '...'

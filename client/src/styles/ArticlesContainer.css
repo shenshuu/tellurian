@@ -1,0 +1,6 @@
+#articles-container {
+    background-color: black;
+    overflow: scroll;
+    width: 800px;
+    height: 80vh;
+}
