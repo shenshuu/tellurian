@@ -2,6 +2,9 @@ import "./App.css";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import { Country } from "./components/Country";
+import SignIn from "./components/SignIn";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import MainPage from "./components/MainPage";
 import { geoPath, select, geoOrthographic, geoGraticule, count } from "d3";
 import { useState, useEffect, useCallback, createContext } from "react";
@@ -71,6 +74,8 @@ function App() {
     <div>
       <ArticleContext.Provider value={{ articles, setArticles }}>
         <Navbar />
+        {/* <SignUpPage /> */}
+        {/* <LoginPage /> */}
         <MainPage />
       </ArticleContext.Provider>
       <Footer />
