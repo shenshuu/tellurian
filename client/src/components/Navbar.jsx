@@ -1,17 +1,14 @@
-import '../styles/Navbar.css'
-
+import "../styles/Navbar.css";
+import "../assets/glass.png";
+import { SearchContainer } from "./SearchContainer";
 export const Navbar = () => {
-    return (
-        <>
-            <div id='navbar'>
-                <p id='title'>TELLURIAN</p>
-                <div>
-                    search
-                    <img src='../assets/glass.png'/>
-                    <input placeholder='country...'/>
-                </div>
-                <p id='team-link'>Meet the team</p>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div id="navbar">
+        <p id="title">TELLURIAN</p>
+        <SearchContainer />
+        <p id="team-link">Meet the team</p>
+      </div>
+    </>
+  );
+};
