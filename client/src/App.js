@@ -3,9 +3,11 @@ import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import { Country } from "./components/Country";
 import MainPage from "./components/MainPage";
+import MeetTheTeam from "./components/MeetTheTeam";
 import { geoPath, select, geoOrthographic, geoGraticule, count } from "d3";
 import { useState, useEffect, useCallback, createContext } from "react";
 import { useData } from "./utils/useData";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 /*
 const initialPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -67,14 +69,19 @@ function App() {
     }
   }, [data, path]);
 */
-  return (
+return (
+  <Router>
     <div>
       <ArticleContext.Provider value={{ articles, setArticles }}>
         <Navbar />
-        <MainPage />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/meet-the-team" element={<MeetTheTeam />} />
+        </Routes>
       </ArticleContext.Provider>
       <Footer />
     </div>
+  </Router>
   );
 }
 
