@@ -10,7 +10,7 @@ const MeetTheTeam = () => {
     <div className="meet-the-team-page">
       <div className="meet-the-team-header">
         <h1>Meet the Team behind Tellurian!</h1>
-      </div>gi
+      </div>
       <div className="team-members-container">
         <div className="team-member">
           <img src={michaelImage} alt="Team Member 1" />
