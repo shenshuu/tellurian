@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase'
+import { NavLink  } from "react-router-dom";
 //import { auth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
 
@@ -50,7 +51,7 @@ export default function SignIn() {
         .then((userCredential) => {
             // Signed up
             const user = userCredential.user;
-            /*navigate("/home")*/
+            window.location.href = "/"
             console.log(user);
         })
         .catch((error) => {
@@ -134,9 +135,9 @@ export default function SignIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <NavLink to="/Login" variant="body2">
                     {"Already have an account? Sign In"}
-                  </Link>
+                  </NavLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

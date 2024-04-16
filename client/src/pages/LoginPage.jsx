@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
-import {  signInWithEmailAndPassword   }from 'firebase/auth';
+import {  signInWithEmailAndPassword }from 'firebase/auth';
 import { auth } from '../firebase'
+import { NavLink } from "react-router-dom";
 
 
 
@@ -31,29 +32,31 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
 
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    
     signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
         .then((userCredential) => {
             // Signed in
-            const user = userCredential.user;
-            /*navigate("/home")*/
-            console.log(user);
+          const user = userCredential.user;
+          window.location.href = "/"
+            
+          console.log(user);
+            
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
         });
+        
   };
 
   return (
@@ -125,14 +128,14 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <NavLink to="/SignUp" variant="body2">
                     Forgot password?
-                  </Link>
+                  </NavLink>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <NavLink to="/SignUp" variant="body2">
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </NavLink>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
