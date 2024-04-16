@@ -15,9 +15,27 @@
 #team-link {
   letter-spacing: 2px;
   font-weight: 500;
+  margin-right: 50px;
+  text-decoration: none;
 }
 
 #team-link:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+#home-link {
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-left: 500px;
+  text-decoration: none;
+}
+
+#home-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#home-link:visited, #team-link:visited {
+  color: black; 
 }
