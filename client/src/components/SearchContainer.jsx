@@ -3,6 +3,7 @@ import React from "react";
 import countryList from "../utils/countryList";
 import { ArticleContext } from "../App";
 import { codes } from "../utils/countryCodes.js";
+import SearchIcon from '@mui/icons-material/Search';
 import "../styles/Search.css";
 
 export const SearchContainer = () => {
@@ -39,7 +40,7 @@ export const SearchContainer = () => {
   return (
     <div id="search-container">
       search
-      <img src="glass.png" />
+      <SearchIcon sx={{ fontSize: 12 }}  />
       <div className="searchBar">
         <input
           placeholder="country..."
