@@ -22,7 +22,6 @@ const MainPage = (id) => {
   const user = useContext(UserContext);
   const data = useData();
 
-  //console.log(user.userID);
   const handleMouseDown = useCallback((_) => {
     setMouseDown(true);
   }, []);

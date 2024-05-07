@@ -35,7 +35,13 @@ const deleteFromDB = (articleID, userID) => {
 
 export const ArticlesContainer = ({ articles, userID }) => {
   const [tabIndex, setTabIndex] = useState(0);
-  console.log('from containers ', userID);
+  const user = useContext(UserContext);
+  const [uid, setUid] = useState(undefined);
+
+  useEffect(() => {
+    setUid(user.userID)
+  }, []);
+  
   const changeTab = (index) => {
     setTabIndex(index);
     console.log(index);

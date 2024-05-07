@@ -12,7 +12,7 @@ app.get("/news", async (req, res) => {
                         &country=${req.query.country}
                         &language=en      
                         &image=1
-                        &prioritydomain=top
+                        &category=top,politics
                         `;
     const response = await axios.get(url);
     console.log(url);

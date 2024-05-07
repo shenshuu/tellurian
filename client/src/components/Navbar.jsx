@@ -4,25 +4,17 @@ import { SearchContainer } from "./SearchContainer";
 import LoginIcon from '@mui/icons-material/Login';
 import { Avatar } from "@mui/material";
 import Tooltip from '@mui/material/Tooltip';
-import { color } from "d3";
 import {View} from 'react-native';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
-import { database } from '../firebase'
-
-import { ref, set, child, get, push, onChildAdded, onValue, remove  } from "firebase/database";
 import { doSignOut } from "../auth";
-import { Article } from "./Article";
 
 const auth = getAuth();
-
-var userEmailChar = "L";
 
 export const Navbar = () => {
   const [userChar, setUserChar] = useState("L")
   const [isLogin, setIsLogin] = useState(false)
-  // const [userId, setUser]
 
 
   function stringToColor(string) {
@@ -45,7 +37,6 @@ export const Navbar = () => {
   }
   
   function stringAvatar(name) {
-    console.log(name.charAt(0))
     return {
       children: `${name.charAt(0)}`,
     };
@@ -53,60 +44,8 @@ export const Navbar = () => {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      userEmailChar = user.email.charAt(0);
       setUserChar(user.email.charAt(0).toUpperCase());
       setIsLogin(true);
-
-      var userID = 123456457;
-
-      const saveToDB = (articleID) => {
-          const data = {
-            articleId: Math.floor(Math.random() * 100) 
-        }
-        
-        const postRef = ref(database, `${userID}` + '/Articles');
-        const newPostRef = push(postRef);
-
-        // saving to realtime database
-        set(newPostRef, data).then( () => {
-          // Success.
-        } ).catch( (error) => {
-          console.log(error);
-        });
-      }
-
-      // onChildAdded(postRef, (data) => {
-      //   console.log(data.val())
-      // })
-      
-      const getArticleIds = () => {
-        // reading from realtime database
-        const databaseRef = ref(database, `${userID}`)
-        onValue(databaseRef, (snapshot) => {
-          const data = snapshot.val();
-          console.log(data);
-        })
-        
-      }
-      
-      const deleteFromDB = (articleID) => {
-         // reading from realtime database
-        const databaseRef = ref(database, `${userID}`+ '/Articles')
-        onValue(databaseRef, (snapshot) => {
-          const data = snapshot.val();
-          
-          for (let [key, value] of Object.entries(data.Articles)) {
-            if (value.articleID === articleID) {
-              const articleToDelete = database.ref(`${userID}/Articles/${key}`)
-              articleToDelete.remove();
-              break;
-            }
-          }
-        })
-      
-      }
-    
-      console.log(userEmailChar)
     } else {
       console.log("User not logged in")
     }

@@ -1,11 +1,13 @@
 import '../styles/Article.css'
 import { useState } from 'react'
-import { ref, set, child, get, push, onChildAdded, onValue, remove  } from "firebase/database";
+import { ref, set, push, onValue, remove  } from "firebase/database";
 import { database } from '../firebase';
+import { useEffect, useContext } from 'react';
+import { UserContext } from '../App';
 
 // reading from realtime database
 const getArticleIds = (userID) => {
-    const databaseRef = ref(database, `${userID}`)
+    const databaseRef = ref(database, `${userID}/Articles`)
     onValue(databaseRef, (snapshot) => {
       const data = snapshot.val();
       return data;
@@ -29,7 +31,8 @@ onValue(databaseRef, (snapshot) => {
 }
 
 const articleExists = (articleID, userID) => {
-    const result = getArticleIds(userID).Articles;
+    const result = getArticleIds(userID);
+    if (!result) return false;
     for (let [_, value] of Object.entries(result)) {
         if (value.articleID === articleID) {
             console.log("duplicate entry exists, cannot save");
@@ -40,27 +43,34 @@ const articleExists = (articleID, userID) => {
 }
 
 const saveToDB = (articleID, userID) => {
-  const data = { articleId: articleID}
+    if (articleExists(articleID, userID)) {
+      console.log('Article already saved:', articleID);
+      return;
+    }
   
-  const postRef = ref(database, `${userID}` + '/Articles');
-  const newPostRef = push(postRef);
+    const data = { articleId: articleID };
+    const postRef = ref(database, `${userID}/Articles`); // Construct the reference properly
+    
+    // saving to realtime database
+    push(postRef, data)
+      .then((newPostRef) => {
+        console.log('Article successfully saved:', articleID);
+      })
+      .catch((error) => {
+        console.error('Error saving article:', error);
+      });
+};
 
-  if (articleExists(articleID, userID)) {
-    console.log('article already saved', articleID);
-    return;
-  }
-  
-  // saving to realtime database
-  set(newPostRef, data).then( () => {
-    console.log('article successfully saved');
-    // Success.
-  } ).catch( (error) => {
-    console.log(error);
-  });
-}
 
-export const Article = ({ article, userID }) => {
+export const Article = ({ article }) => {
     const [showDescription, setShowDescription] = useState(false)
+    const user = useContext(UserContext);
+    const [uid, setUid] = useState(undefined);
+
+    useEffect(() => {
+        setUid(user.userID)
+    }, []);
+    
     const handleClick = _ => {
         setShowDescription(!showDescription)
     }
@@ -95,7 +105,7 @@ export const Article = ({ article, userID }) => {
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
                         <a href={article.link} target="_blank">&#x1f517;</a>
-                        <a onClick={() => saveToDB(article.articleId, userID)}>&#x1F516;</a>
+                        <a onClick={() => saveToDB(article.articleId, uid)}>&#x1F516;</a>
                     </div>
                 </div>
             </div>
