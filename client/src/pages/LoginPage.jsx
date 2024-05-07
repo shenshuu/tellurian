@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {  signInWithEmailAndPassword }from 'firebase/auth';
 import { auth } from '../firebase'
 import { NavLink } from "react-router-dom";
+import {useContext} from "react"
 
 
 
@@ -47,7 +48,6 @@ export default function SignIn() {
             // Signed in
           const user = userCredential.user;
           window.location.href = "/"
-            
           console.log(user);
             
         })

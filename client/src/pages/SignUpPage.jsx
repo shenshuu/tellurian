@@ -16,6 +16,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase'
 import { NavLink  } from "react-router-dom";
 //import { auth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { database } from '../firebase'
+import {ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 
@@ -46,6 +49,7 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     var email = data.get('email');
     var password = data.get('password');
+    
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -53,6 +57,22 @@ export default function SignIn() {
             const user = userCredential.user;
             window.location.href = "/"
             console.log(user);
+
+          var testID = 1;
+          const data = {
+            testID: testID,
+             testData: [
+                { 
+                    'dummyName' : 'John Wick',
+                    'Article': "THE BEST ONE",
+                }, 
+             ],
+          }
+          set(ref(database, 'testData/' + testID), data).then( () => {
+             // Success.
+          } ).catch( (error) => {
+            console.log(error);
+          } );
         })
         .catch((error) => {
             const errorCode = error.code;

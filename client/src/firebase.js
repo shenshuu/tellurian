@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, set, onValue } from 'firebase/database'; 
-require("dotenv").config();
+
 
 
 const firebaseConfig = {
