@@ -13,7 +13,7 @@ const getArticleIds = (userID) => {
   const databaseRef = ref(database, `${userID}`)
   onValue(databaseRef, (snapshot) => {
     const data = snapshot.val();
-    console.log(data);
+    return data;
   })
 }
 
@@ -40,6 +40,7 @@ export const ArticlesContainer = ({ articles, userID }) => {
     setTabIndex(index);
     console.log(index);
   };
+  const articleData = getArticleIds();
   return (
     articles && (
       <>
@@ -59,7 +60,8 @@ export const ArticlesContainer = ({ articles, userID }) => {
             </button>
           </div>
           {tabIndex ? (
-            <div>no saved articles</div>
+            
+            <div>{"no saved articles"}</div>
           ) : (
             <div>
               {articles.map((article) => (

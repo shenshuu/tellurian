@@ -3,27 +3,12 @@ import { useState } from 'react'
 import { ref, set, child, get, push, onChildAdded, onValue, remove  } from "firebase/database";
 import { database } from '../firebase';
 
-const saveToDB = (articleID, userID) => {
-    const data = { articleId: articleID}
-  
-  const postRef = ref(database, `${userID}` + '/Articles');
-  const newPostRef = push(postRef);
-
-  // saving to realtime database
-  set(newPostRef, data).then( () => {
-    console.log('article successfully saved');
-    // Success.
-  } ).catch( (error) => {
-    console.log(error);
-  });
-}
-
 // reading from realtime database
 const getArticleIds = (userID) => {
     const databaseRef = ref(database, `${userID}`)
     onValue(databaseRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
+      return data;
     })
   }
   
@@ -34,13 +19,44 @@ onValue(databaseRef, (snapshot) => {
     const data = snapshot.val();
     
     for (let [key, value] of Object.entries(data.Articles)) {
-    if (value.articleID === articleID) {
-        const articleToDelete = database.ref(`${userID}/Articles/${key}`)
-        articleToDelete.remove();
-        break;
-    }
+        if (value.articleID === articleID) {
+            const articleToDelete = database.ref(`${userID}/Articles/${key}`)
+            articleToDelete.remove();
+            break;
+        }
     }
 })
+}
+
+const articleExists = (articleID, userID) => {
+    const result = getArticleIds(userID).Articles;
+    for (let [_, value] of Object.entries(result)) {
+        if (value.articleID === articleID) {
+            console.log("duplicate entry exists, cannot save");
+            return true;
+        }
+    }
+    return false;
+}
+
+const saveToDB = (articleID, userID) => {
+  const data = { articleId: articleID}
+  
+  const postRef = ref(database, `${userID}` + '/Articles');
+  const newPostRef = push(postRef);
+
+  if (articleExists(articleID, userID)) {
+    console.log('article already saved', articleID);
+    return;
+  }
+  
+  // saving to realtime database
+  set(newPostRef, data).then( () => {
+    console.log('article successfully saved');
+    // Success.
+  } ).catch( (error) => {
+    console.log(error);
+  });
 }
 
 export const Article = ({ article, userID }) => {
