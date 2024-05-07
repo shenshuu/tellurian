@@ -1,12 +1,54 @@
 import '../styles/Article.css'
 import { useState } from 'react'
+import { ref, set, child, get, push, onChildAdded, onValue, remove  } from "firebase/database";
+import { database } from '../firebase';
 
-export const Article = ({ article }) => {
+const saveToDB = (articleID, userID) => {
+    const data = { articleId: articleID}
+  
+  const postRef = ref(database, `${userID}` + '/Articles');
+  const newPostRef = push(postRef);
+
+  // saving to realtime database
+  set(newPostRef, data).then( () => {
+    console.log('article successfully saved');
+    // Success.
+  } ).catch( (error) => {
+    console.log(error);
+  });
+}
+
+// reading from realtime database
+const getArticleIds = (userID) => {
+    const databaseRef = ref(database, `${userID}`)
+    onValue(databaseRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+    })
+  }
+  
+// reading from realtime database
+const deleteFromDB = (articleID, userID) => {
+const databaseRef = ref(database, `${userID}`+ '/Articles')
+onValue(databaseRef, (snapshot) => {
+    const data = snapshot.val();
+    
+    for (let [key, value] of Object.entries(data.Articles)) {
+    if (value.articleID === articleID) {
+        const articleToDelete = database.ref(`${userID}/Articles/${key}`)
+        articleToDelete.remove();
+        break;
+    }
+    }
+})
+}
+
+export const Article = ({ article, userID }) => {
     const [showDescription, setShowDescription] = useState(false)
     const handleClick = _ => {
         setShowDescription(!showDescription)
     }
-
+    
     let title = '';
     for (const word of article.title.split(' ')) {
         if (title.length < 60) {
@@ -37,7 +79,7 @@ export const Article = ({ article }) => {
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
                         <a href={article.link} target="_blank">&#x1f517;</a>
-                        <a>&#x1F516;</a>
+                        <a onClick={() => saveToDB(article.articleId, userID)}>&#x1F516;</a>
                     </div>
                 </div>
             </div>

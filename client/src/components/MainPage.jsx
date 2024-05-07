@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useData } from "../utils/useData";
 import "../styles/MainPage.css";
 import { ArticleContext } from "../App";
+import { UserContext } from "../App";
 
 const initialPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 const projection = geoOrthographic()
@@ -14,12 +15,14 @@ const projection = geoOrthographic()
 
 const path = geoPath().projection(projection);
 
-const MainPage = () => {
+const MainPage = (id) => {
   const [mousePosition, setMousePosition] = useState(initialPosition);
   const [mouseDown, setMouseDown] = useState(false);
   const articleList = useContext(ArticleContext);
+  const user = useContext(UserContext);
   const data = useData();
 
+  //console.log(user.userID);
   const handleMouseDown = useCallback((_) => {
     setMouseDown(true);
   }, []);
@@ -87,7 +90,7 @@ const MainPage = () => {
             })}
           </g>
         </svg>
-        <ArticlesContainer articles={articleList.articles} />
+        <ArticlesContainer articles={articleList.articles} id ={user.userID}/>
       </div>
     )
   );

@@ -16,8 +16,7 @@ import {  signInWithEmailAndPassword }from 'firebase/auth';
 import { auth } from '../firebase'
 import { NavLink } from "react-router-dom";
 import {useContext} from "react"
-
-
+import { UserContext } from '../App';
 
 
 function Copyright(props) {
@@ -39,6 +38,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
 
+  const id = useContext(UserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -47,16 +47,15 @@ export default function SignIn() {
         .then((userCredential) => {
             // Signed in
           const user = userCredential.user;
+          id.setUserID(user.uid)
           window.location.href = "/"
           console.log(user);
-            
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
         });
-        
   };
 
   return (

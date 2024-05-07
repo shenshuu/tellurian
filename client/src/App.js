@@ -11,13 +11,19 @@ import { geoPath, select, geoOrthographic, geoGraticule, count } from "d3";
 import { useState, useEffect, useCallback, createContext } from "react";
 import { useData } from "./utils/useData";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const ArticleContext = createContext({});
 export const UserContext = createContext({});
+const auth = getAuth();
 
 export function  App() {
   const [articles, setArticles] = useState([]);
   const [userID, setUserID] = useState("");
+  onAuthStateChanged(auth, (user) => {
+    if(user)
+      setUserID(user.uid)
+  })
 
   return (
     <Router>
@@ -28,7 +34,7 @@ export function  App() {
             <Routes>
               <Route path="/Login" element={<LoginPage />} />
               <Route path="/SignUp" element={<SignUpPage />} />
-              <Route path="/" element={<MainPage />} />
+              <Route path="/" element={<MainPage userID = {userID}/>} />
               <Route path="/meet-the-team" element={<MeetTheTeam />} />
             </Routes>
           </ArticleContext.Provider>
