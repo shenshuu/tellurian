@@ -1,7 +1,5 @@
 import '../styles/Article.css'
 import { useState } from 'react'
-import { ref, set, push, onValue, remove  } from "firebase/database";
-import { database } from '../firebase';
 import { useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { deleteArticle, saveArticle } from '../utils/realtimeDB';
@@ -16,9 +14,6 @@ export const Article = ({ article }) => {
         setUid(user.userID)
     }, []);
     
-    const handleClick = _ => {
-        setShowDescription(!showDescription)
-    }
     
     let title = '';
     for (const word of article.title.split(' ')) {
@@ -34,11 +29,11 @@ export const Article = ({ article }) => {
         <>
             <div className="article">
                 {showDescription ?
-                    <div className="article-tab" onClick={handleClick}>
+                    <div className="article-tab" onClick={() => setShowDescription(!showDescription)}>
                         &#9660;
                     </div>
                 :
-                    <div className="article-tab" onClick={handleClick}>
+                    <div className="article-tab" onClick={() => setShowDescription(!showDescription)}>
                         &#9650;
                     </div>
                 }
@@ -50,7 +45,7 @@ export const Article = ({ article }) => {
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
                         <a href={article.link} target="_blank">&#x1f517;</a>
-                        <a onClick={() => saveArticle(article.articleId, uid)}>&#x1F516;</a>
+                        <a onClick={() => saveArticle(article, uid)}>&#x1F516;</a>
                     </div>
                 </div>
             </div>

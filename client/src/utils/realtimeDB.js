@@ -1,14 +1,14 @@
 import { ref, set, push, onValue, remove  } from "firebase/database";
 import { database } from '../firebase';
 
-export const getArticleIds = (userID) => {
+export const getArticles = (userID) => {
     return new Promise((resolve, reject) => {
         const databaseRef = ref(database, `${userID}/Articles`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
             resolve(data);
         }, (error) => {
-            console.error('Error fetching article IDs:', error);
+            console.error('Error fetching articles:', error);
             reject(error);
         });
     });
@@ -31,7 +31,7 @@ export const deleteArticle = (articleID, userID) => {
 }
 
 export const articleExists = (articleID, userID) => {
-    getArticleIds(userID)
+    getArticles(userID)
       .then(data => {
         if (!data) return false;
         for (let [_, value] of Object.entries(data)) {
@@ -46,19 +46,18 @@ export const articleExists = (articleID, userID) => {
     })
 }
 
-export const saveArticle = (articleID, userID) => {
-    if (articleExists(articleID, userID)) {
-      console.log('Article already saved:', articleID);
+export const saveArticle = (article, userID) => {
+    if (articleExists(article.articleId, userID)) {
+      console.log('Article already saved:', article.articleId);
       return;
     }
   
-    const data = { articleId: articleID };
     const postRef = ref(database, `${userID}/Articles`); // Construct the reference properly
     
     // saving to realtime database
-    push(postRef, data)
+    push(postRef, article)
       .then((newPostRef) => {
-        console.log('Article successfully saved:', articleID);
+        console.log('Article successfully saved:', article.articleId);
       })
       .catch((error) => {
         console.error('Error saving article:', error);

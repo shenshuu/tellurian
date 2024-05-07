@@ -3,7 +3,7 @@ import { Article } from "./Article";
 import "../styles/ArticlesContainer.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
-import { getArticleIds } from "../utils/realtimeDB";
+import { getArticles } from "../utils/realtimeDB";
 
 export const ArticlesContainer = ({ articles, userID }) => {
   const [savedArticles, setSavedArticles] = useState([]);
@@ -13,19 +13,15 @@ export const ArticlesContainer = ({ articles, userID }) => {
 
   useEffect(() => {
     setUid(user.userID)
-  }, []);
+    if (uid) {
+      getArticles(uid)
+          .then(articleData => { // Rename variable to avoid conflict
+              setSavedArticles(Object.values(articleData))
+          })
+          .catch(error => console.log('Error:', error));
+    }
+  }, [uid]);
 
-  const retrieveSavedArticles = () => {
-    getArticleIds(uid)
-        .then(articleData => { // Rename variable to avoid conflict
-            const articleIds = Object.values(articleData).map(obj => obj.articleId).join(',');
-            console.log(articleIds);
-        })
-        .catch(error => console.log('Error:', error));
-    setTabIndex(1);
-};
-  
-  const changeTab = index => setTabIndex(index);
   console.log(savedArticles)
 
   return (
@@ -35,19 +31,23 @@ export const ArticlesContainer = ({ articles, userID }) => {
           <div className="tab-container">
             <button
               className={tabIndex === 0 ? "tabs active" : "tabs"}
-              onClick={() => changeTab(0)}
+              onClick={() => setTabIndex(0)}
             >
               article results
             </button>
             <button
               className={tabIndex === 1 ? "tabs active" : "tabs"}
-              onClick={retrieveSavedArticles}
+              onClick={() => setTabIndex(1)}
             >
               saved articles
             </button>
           </div>
           {tabIndex ? (
-            <div>{"no saved articles"}</div>
+            <div>
+              {savedArticles.map(article => (
+                <Article key={article.articleId} article={article} userID={uid} />
+              ))}
+            </div>
           ) : (
             <div>
               {articles.map((article) => (
