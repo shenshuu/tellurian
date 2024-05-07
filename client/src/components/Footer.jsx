@@ -5,7 +5,7 @@ export const Footer = () => {
         <>
             <div id='footer'>
                 <div id='tech-stack'>
-                    Technologies used: JavaScript, React, Express, MongoDB
+                    Technologies used: Firebase, JavaScript, React, Express
                 </div>
                 <div>
                     Created in 2024

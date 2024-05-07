@@ -1,52 +1,33 @@
 import { useEffect, useState } from "react";
 import { Article } from "./Article";
 import "../styles/ArticlesContainer.css";
-import { index } from "d3";
-import { ref, set, child, get, push, onChildAdded, onValue, remove  } from "firebase/database";
-import { database } from '../firebase';
 import { useContext } from "react";
 import { UserContext } from "../App";
-
-
-// reading from realtime database
-const getArticleIds = (userID) => {
-  const databaseRef = ref(database, `${userID}`)
-  onValue(databaseRef, (snapshot) => {
-    const data = snapshot.val();
-    return data;
-  })
-}
-
-// reading from realtime database
-const deleteFromDB = (articleID, userID) => {
-  const databaseRef = ref(database, `${userID}`+ '/Articles')
-  onValue(databaseRef, (snapshot) => {
-    const data = snapshot.val();
-    
-    for (let [key, value] of Object.entries(data.Articles)) {
-      if (value.articleID === articleID) {
-        const articleToDelete = database.ref(`${userID}/Articles/${key}`)
-        articleToDelete.remove();
-        break;
-      }
-    }
-  })
-}
+import { getArticleIds } from "../utils/realtimeDB";
 
 export const ArticlesContainer = ({ articles, userID }) => {
+  const [savedArticles, setSavedArticles] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
-  const user = useContext(UserContext);
   const [uid, setUid] = useState(undefined);
+  const user = useContext(UserContext);
 
   useEffect(() => {
     setUid(user.userID)
   }, []);
+
+  const retrieveSavedArticles = () => {
+    getArticleIds(uid)
+        .then(articleData => { // Rename variable to avoid conflict
+            const articleIds = Object.values(articleData).map(obj => obj.articleId).join(',');
+            console.log(articleIds);
+        })
+        .catch(error => console.log('Error:', error));
+    setTabIndex(1);
+};
   
-  const changeTab = (index) => {
-    setTabIndex(index);
-    console.log(index);
-  };
-  const articleData = getArticleIds();
+  const changeTab = index => setTabIndex(index);
+  console.log(savedArticles)
+
   return (
     articles && (
       <>
@@ -60,13 +41,12 @@ export const ArticlesContainer = ({ articles, userID }) => {
             </button>
             <button
               className={tabIndex === 1 ? "tabs active" : "tabs"}
-              onClick={() => changeTab(1)}
+              onClick={retrieveSavedArticles}
             >
               saved articles
             </button>
           </div>
           {tabIndex ? (
-            
             <div>{"no saved articles"}</div>
           ) : (
             <div>
