@@ -46,15 +46,15 @@ export const ArticlesContainer = ({ articles, userID }) => {
           </div>
           {tabIndex ? (
             <div>
-              {savedArticles.map(article => (
-                <Article key={article.articleId} article={article} userID={uid} 
+              {savedArticles.map((article, i) => (
+                <Article key={article.articleId + i} article={article} userID={uid} setRetrieved={setRetrieved}
                 savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={true}/>
               ))}
             </div>
           ) : (
             <div>
-              {articles.map((article) => (
-                <Article key={article.articleId} article={article} userID={userID} 
+              {articles.map((article, i) => (
+                <Article key={article.articleId + i} article={article} userID={userID} setRetrieved={setRetrieved}
                 savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={false}/>
               ))}
             </div>

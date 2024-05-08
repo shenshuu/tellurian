@@ -5,7 +5,7 @@ import { UserContext } from '../App';
 import { deleteArticle, saveArticle } from '../utils/realtimeDB';
 
 
-export const Article = ({ article, saved, savedArticles, setSavedArticles }) => {
+export const Article = ({ article, saved, savedArticles, setSavedArticles, setRetrieved }) => {
     const [showDescription, setShowDescription] = useState(false)
     const user = useContext(UserContext);
     const [uid, setUid] = useState(undefined);
@@ -28,6 +28,17 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles }) => 
     const handleSave = (article, uid) => {
         saveArticle(article, uid);
         setSavedArticles(savedArticles.concat([article]));
+        setRetrieved(false);
+    }
+
+    const handleDelete = (article, uid) => {
+        deleteArticle(article.articleId, uid);
+        for (let i = 0; i < savedArticles.length; i++) {
+            if (savedArticles[i].articleId === article.articleId) {
+                setSavedArticles(savedArticles.slice(0,i).concat(savedArticles.slice(i+1)))
+            }
+        }
+        setRetrieved(false);
     }
 
     return (
@@ -51,7 +62,7 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles }) => 
                     <div className="article-links">
                         <a href={article.link} target="_blank">&#x1f517;</a>
                         {saved ? 
-                        <a onClick={() => saveArticle(article, uid)}>&#x1f5d1;</a>
+                        <a onClick={() => handleDelete(article, uid)}>&#x1f5d1;</a>
                         :
                         <a onClick={() => handleSave(article, uid)}>&#x1F516;</a>
                         }

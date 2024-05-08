@@ -19,11 +19,11 @@ export const deleteArticle = (articleID, userID) => {
     const databaseRef = ref(database, `${userID}`+ '/Articles')
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
-    
         for (let [key, value] of Object.entries(data)) {
-            if (value.articleID === articleID) {
-                const articleToDelete = database.ref(`${userID}/Articles/${key}`)
-                articleToDelete.remove();
+            if (value.articleId === articleID) {
+                const articleToDelete = ref(database, `${userID}/Articles/${key}`)
+                remove(articleToDelete);
+                console.log('article successfully deleted');
                 break;
             }
         }
