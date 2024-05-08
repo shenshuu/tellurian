@@ -28,7 +28,7 @@ export const ArticlesContainer = ({ articles, userID }) => {
           setLoading(false);
         });
     }
-  }, [uid]);
+  }, [uid, articles, setLoading]);
 
   if (error) {
     return <div>Error: {error.message}</div>;

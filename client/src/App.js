@@ -1,16 +1,12 @@
 import "./App.css";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
-import { Country } from "./components/Country";
-import SignIn from "./components/SignIn";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import MainPage from "./components/MainPage";
 import MeetTheTeam from "./components/MeetTheTeam";
-import { geoPath, select, geoOrthographic, geoGraticule, count } from "d3";
-import { useState, useEffect, useCallback, createContext } from "react";
-import { useData } from "./utils/useData";
-import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
+import { useState, createContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const ArticleContext = createContext({});
@@ -32,9 +28,9 @@ export function  App() {
           <ArticleContext.Provider value={{ articles, setArticles }}>
             <Navbar />
             <Routes>
-              <Route path="/" element={<Navigate to="/login" />} />
-              <Route path="/Login" element={<LoginPage />} />
-              <Route path="/SignUp" element={<SignUpPage />} />
+              <Route path="/" element={userID ? <MainPage /> : <LoginPage/>} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
               <Route path="/main" element={<MainPage userID = {userID}/>} />
               <Route path="/meet-the-team" element={<MeetTheTeam />} />
             </Routes>

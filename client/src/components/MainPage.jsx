@@ -98,6 +98,7 @@ const MainPage = (id) => {
           </g>
         </svg>
         <ArticlesContainer articles={articleList.articles} id ={user.userID}/>
+      </div>
     )
   );
 };

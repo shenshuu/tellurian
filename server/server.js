@@ -7,13 +7,10 @@ app.use(cors());
 
 app.get("/news", async (req, res) => {
   try {
-    const url = `https://newsdata.io/api/1/news?apikey=
-                        ${process.env.NEWS_DATA_API_KEY}
-                        &country=${req.query.country}
-                        &language=en      
-                        &image=1
-                        &category=top,politics
-                        `;
+    let url = `https://newsdata.io/api/1/news?apikey=${process.env.NEWS_DATA_API_KEY}`;
+    url += `&country=${req.query.country}&language=en&image=1&category=top,politics`;
+    url += `&prioritydomain=top`
+
     const response = await axios.get(url);
     console.log(url);
     res.json(response.data);
