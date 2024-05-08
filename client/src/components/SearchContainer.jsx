@@ -4,6 +4,7 @@ import countryList from "../utils/countryList";
 import { ArticleContext } from "../App";
 import { codes } from "../utils/countryCodes.js";
 import SearchIcon from '@mui/icons-material/Search';
+import { fetchAll } from "../utils/fetchArticles.js";
 import "../styles/Search.css";
 
 export const SearchContainer = () => {
@@ -13,25 +14,8 @@ export const SearchContainer = () => {
   const searchCountry = (val) => {
     setInput(val);
     const country = val.toLowerCase();
-    fetch(`http://localhost:3001/news/?country=${codes[country]}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const articles = data.results.map((a) => {
-          return {
-            articleId: a.article_id,
-            title: a.title,
-            imgUrl: a.image_url,
-            pubDate: a.pubDate,
-            author: a.creator ? a.creator[0] : "Unknown",
-            description: a.description,
-            link: a.link,
-          };
-        });
+    fetchAll(country)
+      .then((articles) => {
         article.setArticles(articles);
       })
       .catch((error) => console.log("news fetching failed"));
