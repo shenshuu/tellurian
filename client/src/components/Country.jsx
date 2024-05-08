@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { fetchAll } from "../utils/fetchArticles.js";
 import { codes } from "../utils/countryCodes.js";
 
 export const Country = ({ country, d, setArticles }) => {
@@ -6,29 +7,15 @@ export const Country = ({ country, d, setArticles }) => {
 
   const handleClick = (event) => {
     const country = event.properties.name.toLowerCase();
-    fetch(`http://localhost:3001/news/?country=${codes[country]}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const articles = data.results.map((a) => {
-          return {
-            articleId: a.article_id,
-            title: a.title,
-            imgUrl: a.image_url,
-            pubDate: a.pubDate,
-            author: a.creator ? a.creator[0] : "Unknown",
-            description: a.description,
-            link: a.link,
-          };
-        });
+    fetchAll(country)
+      .then(articles => {
+        console.log(articles);
         setArticles(articles);
       })
-      .catch((error) => console.log("news fetching failed"));
-  };
+      .catch(error => {
+        console.log('cannot fetch results');
+      });
+  }
 
   return (
     <path

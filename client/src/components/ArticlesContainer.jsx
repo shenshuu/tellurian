@@ -62,7 +62,7 @@ export const ArticlesContainer = ({ articles, userID }) => {
             <div>
               {savedArticles.map((article, i) => (
                 <Article
-                  key={article.articleId + i}
+                  key={i}
                   article={article}
                   userID={uid}
                   savedArticles={savedArticles}
@@ -75,7 +75,7 @@ export const ArticlesContainer = ({ articles, userID }) => {
             <div>
               {articles.map((article, i) => (
                 <Article
-                  key={article.articleId + i}
+                  key={i}
                   article={article}
                   userID={userID}
                   savedArticles={savedArticles}
