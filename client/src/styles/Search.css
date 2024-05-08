@@ -1,5 +1,7 @@
 #search-container {
-  position: fixed;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
   top: 0;
   margin-top: 5px;
 }

@@ -60,17 +60,16 @@ export const Navbar = () => {
     <>
     
       <View id="navbar" style={{
-        
         flexDirection: 'row',
         alignContent: 'space-between'
       }}>
-        <p id="title" style={{    
-        alignSelf: 'space-between'
-      }}>TELLURIAN</p>
+        <p id="title" >TELLURIAN</p>
         <SearchContainer style={{    
         flex: 2
       }}/>
-        <Link to="/" id="home-link" >Home</Link>
+      <div className="link-box">
+      
+        <Link to="/main" id="home-link" >Home</Link>
         <Link to="/meet-the-team" id="team-link">Meet the team</Link>
         {isLogin ? 
     <> <Tooltip title="Sign out">
@@ -84,7 +83,7 @@ export const Navbar = () => {
        <Link to="/Login"> <Avatar sx={{ bgcolor: "black"}} > < LoginIcon/> </Avatar></Link> </></Tooltip>
        </>
     }
-        
+      </div>  
       </View>
     </>
   );

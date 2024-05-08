@@ -10,7 +10,7 @@ import MeetTheTeam from "./components/MeetTheTeam";
 import { geoPath, select, geoOrthographic, geoGraticule, count } from "d3";
 import { useState, useEffect, useCallback, createContext } from "react";
 import { useData } from "./utils/useData";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const ArticleContext = createContext({});
@@ -32,9 +32,10 @@ export function  App() {
           <ArticleContext.Provider value={{ articles, setArticles }}>
             <Navbar />
             <Routes>
+              <Route path="/" element={<Navigate to="/login" />} />
               <Route path="/Login" element={<LoginPage />} />
               <Route path="/SignUp" element={<SignUpPage />} />
-              <Route path="/" element={<MainPage userID = {userID}/>} />
+              <Route path="/main" element={<MainPage userID = {userID}/>} />
               <Route path="/meet-the-team" element={<MeetTheTeam />} />
             </Routes>
           </ArticleContext.Provider>

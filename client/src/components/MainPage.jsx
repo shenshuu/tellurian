@@ -9,9 +9,10 @@ import { UserContext } from "../App";
 
 const initialPosition = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 const projection = geoOrthographic()
+  
   .scale(250)
   .translate([300, 300])
-  .rotate([10, 10, 10]);
+  .rotate([100, -40, 0]);
 
 const path = geoPath().projection(projection);
 
@@ -29,6 +30,11 @@ const MainPage = (id) => {
   const handleMouseUp = useCallback((_) => {
     setMouseDown(false);
   }, []);
+  const updateGraticule = useCallback(() => {
+    select("#graticule")
+      .datum(graticule())
+      .attr("d", path);
+  }, [path]);
 
   const handleMouseMove = useCallback(
     (event) => {
@@ -44,9 +50,10 @@ const MainPage = (id) => {
           rotation[2],
         ]);
         setMousePosition({ x: clientX, y: clientY });
+        updateGraticule();
       }
     },
-    [mousePosition, mouseDown]
+    [mousePosition, mouseDown, updateGraticule]
   );
 
   const graticule = geoGraticule();
@@ -55,6 +62,7 @@ const MainPage = (id) => {
       select("#sphere-container")
         .append("path")
         .datum(graticule())
+        .attr("id", "graticule")
         .attr("d", path)
         .attr("class", "graticule")
         .style("fill", "none")
@@ -90,7 +98,6 @@ const MainPage = (id) => {
           </g>
         </svg>
         <ArticlesContainer articles={articleList.articles} id ={user.userID}/>
-      </div>
     )
   );
 };
