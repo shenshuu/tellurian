@@ -9,18 +9,20 @@ export const ArticlesContainer = ({ articles, userID }) => {
   const [savedArticles, setSavedArticles] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const [uid, setUid] = useState(undefined);
+  const [retrieved, setRetrieved] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(() => {
     setUid(user.userID)
     if (uid) {
       getArticles(uid)
-          .then(articleData => { // Rename variable to avoid conflict
+          .then(articleData => { 
               setSavedArticles(Object.values(articleData))
+              setRetrieved(true)
           })
           .catch(error => console.log('Error:', error));
     }
-  }, [uid]);
+  }, [uid, retrieved]);
 
   console.log(savedArticles)
 
@@ -45,13 +47,15 @@ export const ArticlesContainer = ({ articles, userID }) => {
           {tabIndex ? (
             <div>
               {savedArticles.map(article => (
-                <Article key={article.articleId} article={article} userID={uid} />
+                <Article key={article.articleId} article={article} userID={uid} 
+                savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={true}/>
               ))}
             </div>
           ) : (
             <div>
               {articles.map((article) => (
-                <Article key={article.articleId} article={article} userID={userID}/>
+                <Article key={article.articleId} article={article} userID={userID} 
+                savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={false}/>
               ))}
             </div>
           )}

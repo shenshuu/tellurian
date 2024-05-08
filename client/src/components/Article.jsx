@@ -5,7 +5,7 @@ import { UserContext } from '../App';
 import { deleteArticle, saveArticle } from '../utils/realtimeDB';
 
 
-export const Article = ({ article }) => {
+export const Article = ({ article, saved, savedArticles, setSavedArticles }) => {
     const [showDescription, setShowDescription] = useState(false)
     const user = useContext(UserContext);
     const [uid, setUid] = useState(undefined);
@@ -23,6 +23,11 @@ export const Article = ({ article }) => {
             title += '...'
             break
         }
+    }
+
+    const handleSave = (article, uid) => {
+        saveArticle(article, uid);
+        setSavedArticles(savedArticles.concat([article]));
     }
 
     return (
@@ -45,7 +50,11 @@ export const Article = ({ article }) => {
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
                         <a href={article.link} target="_blank">&#x1f517;</a>
-                        <a onClick={() => saveArticle(article, uid)}>&#x1F516;</a>
+                        {saved ? 
+                        <a onClick={() => saveArticle(article, uid)}>&#x1f5d1;</a>
+                        :
+                        <a onClick={() => handleSave(article, uid)}>&#x1F516;</a>
+                        }
                     </div>
                 </div>
             </div>
