@@ -9,20 +9,34 @@ export const ArticlesContainer = ({ articles, userID }) => {
   const [savedArticles, setSavedArticles] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const [uid, setUid] = useState(undefined);
-  const [retrieved, setRetrieved] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const user = useContext(UserContext);
 
   useEffect(() => {
-    setUid(user.userID)
+    setUid(user.userID);
     if (uid) {
+      setLoading(true);
       getArticles(uid)
-          .then(articleData => { 
-              setSavedArticles(Object.values(articleData))
-              setRetrieved(true)
-          })
-          .catch(error => console.log('Error:', error));
+        .then((articleData) => {
+          setSavedArticles(Object.values(articleData));
+        })
+        .catch((error) => {
+          setError(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [uid, retrieved]);
+  }, [uid]);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   console.log(savedArticles)
 
@@ -35,27 +49,39 @@ export const ArticlesContainer = ({ articles, userID }) => {
               className={tabIndex === 0 ? "tabs active" : "tabs"}
               onClick={() => setTabIndex(0)}
             >
-              article results
+              Article Results
             </button>
             <button
               className={tabIndex === 1 ? "tabs active" : "tabs"}
               onClick={() => setTabIndex(1)}
             >
-              saved articles
+              Saved Articles
             </button>
           </div>
           {tabIndex ? (
             <div>
               {savedArticles.map((article, i) => (
-                <Article key={article.articleId + i} article={article} userID={uid} setRetrieved={setRetrieved}
-                savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={true}/>
+                <Article
+                  key={article.articleId + i}
+                  article={article}
+                  userID={uid}
+                  savedArticles={savedArticles}
+                  setSavedArticles={setSavedArticles}
+                  saved={true}
+                />
               ))}
             </div>
           ) : (
             <div>
               {articles.map((article, i) => (
-                <Article key={article.articleId + i} article={article} userID={userID} setRetrieved={setRetrieved}
-                savedArticles={savedArticles} setSavedArticles={setSavedArticles} saved={false}/>
+                <Article
+                  key={article.articleId + i}
+                  article={article}
+                  userID={userID}
+                  savedArticles={savedArticles}
+                  setSavedArticles={setSavedArticles}
+                  saved={false}
+                />
               ))}
             </div>
           )}

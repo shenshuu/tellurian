@@ -5,7 +5,7 @@ import { UserContext } from '../App';
 import { deleteArticle, saveArticle } from '../utils/realtimeDB';
 
 
-export const Article = ({ article, saved, savedArticles, setSavedArticles, setRetrieved }) => {
+export const Article = ({ article, saved, savedArticles, setSavedArticles }) => {
     const [showDescription, setShowDescription] = useState(false)
     const user = useContext(UserContext);
     const [uid, setUid] = useState(undefined);
@@ -28,7 +28,6 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles, setRe
     const handleSave = (article, uid) => {
         saveArticle(article, uid);
         setSavedArticles(savedArticles.concat([article]));
-        setRetrieved(false);
     }
 
     const handleDelete = (article, uid) => {
@@ -38,7 +37,6 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles, setRe
                 setSavedArticles(savedArticles.slice(0,i).concat(savedArticles.slice(i+1)))
             }
         }
-        setRetrieved(false);
     }
 
     return (
