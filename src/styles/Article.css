@@ -59,3 +59,7 @@
 .article-links a {
   text-decoration: none;
 }
+
+.article-links a:hover {
+  cursor: pointer;
+}
