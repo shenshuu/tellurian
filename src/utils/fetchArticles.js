@@ -44,6 +44,28 @@ const normalizeNewsApi = (data) => {
 }
 
 
+const normalizeNewsDataApi = (data) => {
+    return data.results.map(a => {
+        return {
+            title: a.title,
+            imgUrl: a.image_url,
+            pubDate: a.pubDate,
+            author: a.creator,
+            description: a.description,
+            link: a.link,
+        };
+    })
+}
+
+
+export const fetchNewsDataArticles = async (country) => {
+    let url = `https://newsdata.io/api/1/news?apikey=pub_4071273a18a3dd5b7a610be551e6ace3e4942`;
+    url += `&q=${country}&language=en&prioritydomain=top&category=top`;
+    const response = await axios.get(url);
+    return normalizeNewsDataApi(response.data);
+}
+
+
 export const fetchNewsApiArticles = async (country) => {
     let url = `https://newsapi.org/v2/top-headlines?apiKey=444f13e0e8cb4e1cbbefa2f98b139e98`;
     url += `&q=${country}&language=en`;
@@ -62,8 +84,9 @@ export const fetchGNewsArticles = async (country) => {
 export const fetchAll = async (country) => {
     const newsApiPromise = fetchNewsApiArticles(country);
     const gnewsPromise = fetchGNewsArticles(country);
+    const newsDataPromise = fetchNewsDataArticles(country);
 
-    const response = await Promise.allSettled([newsApiPromise, gnewsPromise]);
+    const response = await Promise.allSettled([newsApiPromise, gnewsPromise, newsDataPromise]);
     let results = [];
     response.forEach(obj => {
         if (obj.status === 'fulfilled') {
