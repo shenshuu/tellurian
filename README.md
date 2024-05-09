@@ -53,7 +53,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgements
 
-GlobeNews uses the following open-source libraries and APIs:
+Tellurian uses the following open-source libraries and APIs:
 
 - [d3.js](https://d3js.org/)
 - [News API](https://newsapi.org/)
