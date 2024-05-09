@@ -97,7 +97,7 @@ const MainPage = (id) => {
             })}
           </g>
         </svg>
-        <ArticlesContainer articles={articleList.articles} id ={user.userID}/>
+        <ArticlesContainer setArticles={articleList.setArticles} articles={articleList.articles} id ={user.userID}/>
       </div>
     )
   );

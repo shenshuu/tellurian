@@ -4,14 +4,26 @@ import "../styles/ArticlesContainer.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
 import { getArticles } from "../utils/realtimeDB";
+import { fetchAll } from "../utils/fetchArticles";
 
-export const ArticlesContainer = ({ articles, userID }) => {
+export const ArticlesContainer = ({ articles, setArticles, userID }) => {
   const [savedArticles, setSavedArticles] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
   const [uid, setUid] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const user = useContext(UserContext);
+
+  useEffect(() => {
+    fetchAll('united states')
+      .then(articles => {
+        console.log('successfully fetched default articles')
+        setArticles(articles);
+      })
+      .catch(error => {
+        console.log('unable to fetch default articles')
+      })
+  }, [])
 
   useEffect(() => {
     setUid(user.userID);
