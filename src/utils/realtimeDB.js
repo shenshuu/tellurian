@@ -1,8 +1,6 @@
 import { ref, push, onValue, remove  } from "firebase/database";
 import { database } from '../firebase';
 
-export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
-
 export const getArticles = (userID) => {
     return new Promise((resolve, reject) => {
         const databaseRef = ref(database, `${userID}/Articles`);
@@ -21,7 +19,7 @@ export const deleteArticle = (article, userID) => {
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
         for (let [key, value] of Object.entries(data)) {
-            if (isEqual(value, article)) {
+            if (article.title === value.title) {
                 const articleToDelete = ref(database, `${userID}/Articles/${key}`)
                 remove(articleToDelete);
                 console.log('article successfully deleted', article);
@@ -37,7 +35,7 @@ export const articleExists = (article, userID) => {
       .then(data => {
         if (!data) return false;
         for (let [_, value] of Object.entries(data)) {
-            if (isEqual(value, article)) {
+            if (value.title === article.title) {
                 console.log("duplicate entry exists, cannot save");
                 exists = true;
             }

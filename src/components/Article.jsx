@@ -2,7 +2,7 @@ import '../styles/Article.css'
 import { useState } from 'react'
 import { useEffect, useContext } from 'react';
 import { UserContext } from '../App';
-import { isEqual, deleteArticle, saveArticle } from '../utils/realtimeDB';
+import { deleteArticle, saveArticle } from '../utils/realtimeDB';
 
 
 export const Article = ({ article, saved, savedArticles, setSavedArticles }) => {
@@ -33,7 +33,7 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles }) => 
     const handleDelete = (article, uid) => {
         deleteArticle(article, uid);
         for (let i = 0; i < savedArticles.length; i++) {
-            if (isEqual(savedArticles[i], article)) {
+            if (savedArticles[i].title, article.title) {
                 setSavedArticles(savedArticles.slice(0,i).concat(savedArticles.slice(i+1)))
             }
         }
