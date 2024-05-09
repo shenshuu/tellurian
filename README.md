@@ -5,10 +5,12 @@
 Tellurian is a web application that allows users to explore top news headlines from around the world by interacting with a 3D globe interface.
 
 ## Features
+<img src="https://github.com/shenshuu/tellurian/assets/26040264/2e99f291-975e-4a91-a624-bd4363da0db8" align="right" width="110" height="100" />
 
 - **Interactive Globe**: Users can spin and zoom in on a 3D globe to explore different countries.
 - **Country Selection**: Users can select a country on the globe to view and save top news articles from that country.
 - **Top News Headlines**: GlobeNews fetches and displays the latest top news headlines from various news sources for the selected country.
+<br clear="right"/>
 
 ## Getting Started
 
