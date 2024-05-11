@@ -3,8 +3,8 @@ body {
   }
 
   .meet-the-team-page {
-    background-color: #FEBA4F;
-    background: linear-gradient(45deg, #FEBA4F 25%, transparent 45%, transparent 45%, #FEBA4F 75%);
+    background-color: black;
+    /* background: linear-gradient(45deg, #FEBA4F 25%, transparent 45%, transparent 45%, #FEBA4F 75%); */
     text-align: center;
     padding-bottom: 100px;
   }
@@ -15,7 +15,7 @@ body {
   
   .meet-the-team-header h1 {
     font-size: 2rem;
-    color: black;
+    color: orange;
     margin-bottom: 10px;
   }
   

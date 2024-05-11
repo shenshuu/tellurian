@@ -36,7 +36,7 @@ const normalizeNewsApi = (data) => {
             title: a.title,
             imgUrl: a.urlToImage,
             pubDate: a.publishedAt,
-            author: a.author,
+            author: a.author ? a.author : 'Unknown',
             description: a.description,
             link: a.url,
         };
@@ -50,11 +50,32 @@ const normalizeNewsDataApi = (data) => {
             title: a.title,
             imgUrl: a.image_url,
             pubDate: a.pubDate,
-            author: a.creator,
+            author: a.creator ? a.creator : 'Uknown',
             description: a.description,
             link: a.link,
         };
     })
+}
+
+
+const normalizeWorldNews = (data) => {
+    return data.news.map(a => {
+        return {
+            title: a.title,
+            imgUrl: a.image,
+            pubDate: a.publish_date,
+            author: a.author ? a.author : 'Unknown',
+            description: a.text,
+            link: a.url,
+        };
+    })
+}
+
+const fetchWorldNewsArticles = async (country) => {
+    let url = `https://api.worldnewsapi.com/search-news?api-key=2d39420d04eb48f9b399c7cc25ceb3ae`;
+    url += `&text=${country}&language=en`;
+    const response = await axios.get(url);
+    return normalizeWorldNews(response.data);
 }
 
 
@@ -76,7 +97,10 @@ export const fetchNewsApiArticles = async (country) => {
 
 export const fetchGNewsArticles = async (country) => {
     let url = `https://gnews.io/api/v4/search?apikey=3092613eac9696ea640064af7cae7017`;
-    url += `&from=2024-01-01T22:05:54Z&to=2024-05-08T22:05:54Z&lang=en&q=${country}`;
+    let to = new Date();
+    let from = new Date();
+    from.setDate(from.getDate() - 7);
+    url += `&from=${from.toISOString()}&to=${to.toISOString()}&lang=en&q=${country}`;
     const response = await axios.get(url);
     return normalizeGNews(response.data);
 }
@@ -85,8 +109,15 @@ export const fetchAll = async (country) => {
     const newsApiPromise = fetchNewsApiArticles(country);
     const gnewsPromise = fetchGNewsArticles(country);
     const newsDataPromise = fetchNewsDataArticles(country);
+    // const worldNewsPromise = fetchWorldNewsArticles(country);
 
-    const response = await Promise.allSettled([newsApiPromise, gnewsPromise, newsDataPromise]);
+    const response = await Promise.allSettled([
+        newsApiPromise, 
+        gnewsPromise, 
+        newsDataPromise,
+        // worldNewsPromise
+    ]);
+
     let results = [];
     response.forEach(obj => {
         if (obj.status === 'fulfilled') {
