@@ -33,8 +33,9 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles }) => 
     const handleDelete = (article, uid) => {
         deleteArticle(article, uid);
         for (let i = 0; i < savedArticles.length; i++) {
-            if (savedArticles[i].title, article.title) {
+            if (savedArticles[i].title === article.title) {
                 setSavedArticles(savedArticles.slice(0,i).concat(savedArticles.slice(i+1)))
+                break;
             }
         }
     }
