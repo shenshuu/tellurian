@@ -15,15 +15,15 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    fetchAll('united states')
-      .then(articles => {
-        console.log('successfully fetched default articles')
+    fetchAll("united states")
+      .then((articles) => {
+        console.log("successfully fetched default articles");
         setArticles(articles);
       })
-      .catch(error => {
-        console.log('unable to fetch default articles')
-      })
-  }, [])
+      .catch((error) => {
+        console.log("unable to fetch default articles");
+      });
+  }, []);
 
   useEffect(() => {
     setUid(user.userID);
@@ -42,12 +42,11 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
     }
   }, [uid, articles, setLoading]);
 
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  console.log(savedArticles)
+  console.log(savedArticles);
 
   return (
     articles && (
@@ -80,6 +79,8 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
                 />
               ))}
             </div>
+          ) : loading ? (
+            <div>loading...</div>
           ) : (
             <div>
               {articles.map((article, i) => (
