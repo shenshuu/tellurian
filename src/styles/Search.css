@@ -1,9 +1,16 @@
 #search-container {
+  display: flex;
   left: 50%;
   position: absolute;
   transform: translateX(-50%);
-  top: 0;
+  /* top: -10px; */
   margin-top: 5px;
+}
+
+#search-logo {
+  font-size: 20px;
+  padding-right: 5px;
+  padding-top: 2px;
 }
 
 #search-container input {
@@ -27,6 +34,7 @@
   background-color: white;
   padding: 3px;
   padding-left: 6px;
+  z-index: 10000;
 }
 
 .dropItem:hover {

@@ -23,8 +23,9 @@ export const SearchContainer = () => {
 
   return (
     <div id="search-container">
-      search
-      <SearchIcon sx={{ fontSize: 12 }}  />
+      <div id="search-logo">
+        <SearchIcon sx={{ fontSize: 12 }}  />
+      </div>
       <div className="searchBar">
         <input
           placeholder="country..."

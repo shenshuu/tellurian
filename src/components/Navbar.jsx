@@ -9,15 +9,14 @@ import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import { doSignOut } from "../auth";
-import { useNavigate } from "react-router-dom";
 
 const auth = getAuth();
 var authFlag = false;
-//const navigate = useNavigate();
 
 export const Navbar = () => {
   const [userChar, setUserChar] = useState("L");
   const [isLogin, setIsLogin] = useState(false);
+  const [viewTeam, setViewTeam] = useState(false);
 
   function stringToColor(string) {
     let hash = 0;
@@ -63,7 +62,6 @@ export const Navbar = () => {
     //navigate("/login");
   };
 
-  console.log(isLogin);
   return (
     <>
       <View
@@ -73,17 +71,24 @@ export const Navbar = () => {
           alignContent: "space-between",
         }}
       >
-        <p id="title">TELLURIAN</p>
+        <Link 
+        style={{'text-decoration': 'none', 'color': 'black'}} 
+        onClick={() => setViewTeam(false)}
+        to={isLogin ? "\main" : "\Login"}>
+          <p id="title">TELLURIAN</p>
+        </Link>
+        {isLogin && !viewTeam ?
         <SearchContainer
           style={{
             flex: 2,
           }}
         />
+        :
+        null
+        }
         <div className="link-box">
-          <Link to="/main" id="home-link">
-            Home
-          </Link>
-          <Link to="/meet-the-team" id="team-link">
+          
+          <Link to="/meet-the-team" id="team-link" onClick={() => setViewTeam(true)}>
             Meet the team
           </Link>
           {isLogin ? (
@@ -101,7 +106,7 @@ export const Navbar = () => {
             </>
           ) : (
             <>
-              <Tooltip title="Sign In">
+              <Tooltip title="Sign In" onClick={() => setViewTeam(false)}>
                 <>
                   <Link to="/Login">
                     {" "}
