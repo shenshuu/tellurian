@@ -72,7 +72,7 @@ export const Navbar = () => {
         }}
       >
         <Link 
-        style={{'text-decoration': 'none', 'color': 'black'}} 
+        style={{'textDecoration': 'none', 'color': 'black'}} 
         onClick={() => setViewTeam(false)}
         to={isLogin ? "\main" : "\Login"}>
           <p id="title">TELLURIAN</p>
