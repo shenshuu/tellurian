@@ -51,7 +51,9 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
       if (criteria === "title") {
         return a.title.localeCompare(b.title);
       } else if (criteria === "author") {
-        return a.author.localeCompare(b.author);
+        const authorA = a.author && typeof a.author === 'string' ? a.author : '';
+        const authorB = b.author && typeof b.author === 'string' ? b.author : '';
+        return authorA.localeCompare(authorB);
       } else if (criteria === "date") {
         return new Date(b.pubDate) - new Date(a.pubDate);
       }
