@@ -8,4 +8,5 @@
     height: 14vh;
     font-weight: 500;
     background-color: orange;
+    max-width: 100%;
 }

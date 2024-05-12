@@ -5,6 +5,7 @@
   background-color: orange;
   height: 8vh;
   width: 100vw;
+  max-width: 100%;
   position: relative;
 }
 
@@ -14,6 +15,7 @@
   letter-spacing: 10px;
   font-weight: bold;
 }
+
 .link-box{
   padding-right: 5vw;
   width: 30vw;
