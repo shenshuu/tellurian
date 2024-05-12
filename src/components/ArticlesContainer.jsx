@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { UserContext } from "../App";
 import { getArticles } from "../utils/realtimeDB";
 import { fetchAll } from "../utils/fetchArticles";
+import { SortArticles } from "./SortArticles";
+import { SearchArticles } from "./SearchArticles";
 
 export const ArticlesContainer = ({ articles, setArticles, userID }) => {
   const [savedArticles, setSavedArticles] = useState([]);
@@ -13,6 +15,8 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const user = useContext(UserContext);
+  const [sortCriteria, setSortCriteria] = useState("title");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchAll("united states")
@@ -42,6 +46,34 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
     }
   }, [uid, articles, setLoading]);
 
+  const sortArticles = (articles, criteria) => {
+    return [...articles].sort((a, b) => {
+      if (criteria === "title") {
+        return a.title.localeCompare(b.title);
+      } else if (criteria === "author") {
+        return a.author.localeCompare(b.author);
+      } else if (criteria === "date") {
+        return new Date(b.pubDate) - new Date(a.pubDate);
+      }
+      return 0;
+    });
+  };
+
+  const searchArticles = (articles, query) => {
+    return articles.filter((article) => {
+      const titleMatch = article.title && article.title.toLowerCase().includes(query.toLowerCase());
+      const authorMatch = article.author && typeof article.author === 'string' && article.author.toLowerCase().includes(query.toLowerCase());
+      const descriptionMatch = article.description && article.description.toLowerCase().includes(query.toLowerCase());
+      return titleMatch || authorMatch || descriptionMatch;
+    });
+  };
+
+  const displayedArticles = sortArticles(
+    searchArticles(savedArticles, searchQuery),
+    sortCriteria
+  );
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -68,7 +100,17 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
           </div>
           {tabIndex ? (
             <div>
-              {savedArticles.map((article, i) => (
+              <div id="articleOrder">
+                <SortArticles
+                  sortCriteria={sortCriteria}
+                  setSortCriteria={setSortCriteria}
+                />
+                <SearchArticles
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
+              {displayedArticles.map((article, i) => (
                 <Article
                   key={i}
                   article={article}

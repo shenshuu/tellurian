@@ -59,7 +59,7 @@ export const Article = ({ article, saved, savedArticles, setSavedArticles }) => 
                 <div className="article-right">
                     <img className="article-img" src={article.imgUrl}/>
                     <div className="article-links">
-                        <a href={article.link} target="_blank">&#x1f517;</a>
+                    <a href={article.link} target="_blank" className="article-link-icon">&#x1f517;</a>
                         {saved ? 
                         <a onClick={() => handleDelete(article, uid)}>&#x1f5d1;</a>
                         :

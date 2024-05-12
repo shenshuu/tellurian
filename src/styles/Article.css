@@ -1,9 +1,9 @@
 .article {
   display: flex;
   width: 100%;
-  height: 110px;
+  height: 130px; 
   border-bottom: 1px solid gray;
-  padding-bottom: 5px;
+  padding: 10px 0;
   opacity: 0.8;
 }
 
@@ -23,37 +23,41 @@
   background-color: white;
   opacity: 0.8;
   color: gray;
-  font-size: 12px;
+  font-size: 14px; /* Increased font size */
+  line-height: 1.4; /* Added line height */
   width: 78.8%;
-  padding: 3px;
-  margin: 0px;
+  padding: 5px; /* Increased padding */
+  margin: 0;
 }
 
 .article-right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 150px;
+  width: 40%; /* Adjusted width */
+  padding-left: 10px; /* Added padding */
 }
 
 .article-author {
   color: gray;
-  font-size: 12px;
+  font-size: 14px; /* Increased font size */
   letter-spacing: 0.5px;
+  margin-top: 5px; /* Added margin */
 }
 
 .article-img {
   width: 100%;
-  height: 80%;
+  height: auto; /* Changed to auto */
+  max-height: 100px; /* Added max-height */
+  object-fit: cover; /* Added object-fit */
 }
 
 .article-links {
   display: flex;
   justify-content: flex-end;
-  column-gap: 10px;
-  margin-top: 3px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+  column-gap: 15px; /* Increased gap */
+  margin-top: 10px; /* Increased margin */
+  margin-right: 10px; /* Increased margin */
 }
 
 .article-links a {
@@ -62,4 +66,13 @@
 
 .article-links a:hover {
   cursor: pointer;
+}
+
+
+#articleOrder {
+  display: flex;
+  justify-content: space-evenly;
+  margin-right: 5px;
+  margin-bottom: 25px;
+  margin-top: 10px;
 }

@@ -2,7 +2,7 @@ import "../styles/Navbar.css";
 import "../assets/glass.png";
 import { SearchContainer } from "./SearchContainer";
 import LoginIcon from "@mui/icons-material/Login";
-import { Avatar } from "@mui/material";
+import { Avatar , IconButton  } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { View } from "react-native";
 import { Link } from "react-router-dom";
@@ -96,11 +96,12 @@ export const Navbar = () => {
               {" "}
               <Tooltip title="Sign out">
                 <>
-                  <Avatar
-                    sx={{ bgcolor: stringToColor(userChar) }}
+                <IconButton className="avatar-button" onClick={() => SignOut()}>
+                  <Avatar sx={{ bgcolor: stringToColor(userChar) }}
                     {...stringAvatar(userChar)}
-                    onClick={() => SignOut()}
-                  />{" "}
+                  />  
+                </IconButton>
+                  {" "}
                 </>
               </Tooltip>
             </>

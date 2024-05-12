@@ -24,7 +24,7 @@ export const SearchContainer = () => {
   return (
     <div id="search-container">
       <div id="search-logo">
-        <SearchIcon sx={{ fontSize: 12 }}  />
+        <SearchIcon sx={{ fontSize: 15 }}  />
       </div>
       <div className="searchBar">
         <input
