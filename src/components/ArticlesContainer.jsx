@@ -51,8 +51,10 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
       if (criteria === "title") {
         return a.title.localeCompare(b.title);
       } else if (criteria === "author") {
-        const authorA = a.author && typeof a.author === 'string' ? a.author : '';
-        const authorB = b.author && typeof b.author === 'string' ? b.author : '';
+        const authorA =
+          a.author && typeof a.author === "string" ? a.author : "";
+        const authorB =
+          b.author && typeof b.author === "string" ? b.author : "";
         return authorA.localeCompare(authorB);
       } else if (criteria === "date") {
         return new Date(b.pubDate) - new Date(a.pubDate);
@@ -63,9 +65,16 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
 
   const searchArticles = (articles, query) => {
     return articles.filter((article) => {
-      const titleMatch = article.title && article.title.toLowerCase().includes(query.toLowerCase());
-      const authorMatch = article.author && typeof article.author === 'string' && article.author.toLowerCase().includes(query.toLowerCase());
-      const descriptionMatch = article.description && article.description.toLowerCase().includes(query.toLowerCase());
+      const titleMatch =
+        article.title &&
+        article.title.toLowerCase().includes(query.toLowerCase());
+      const authorMatch =
+        article.author &&
+        typeof article.author === "string" &&
+        article.author.toLowerCase().includes(query.toLowerCase());
+      const descriptionMatch =
+        article.description &&
+        article.description.toLowerCase().includes(query.toLowerCase());
       return titleMatch || authorMatch || descriptionMatch;
     });
   };
@@ -75,12 +84,7 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
     sortCriteria
   );
 
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  console.log(savedArticles);
+  //console.log(savedArticles);
 
   return (
     articles && (

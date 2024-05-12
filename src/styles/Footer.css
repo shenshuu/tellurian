@@ -1,11 +1,11 @@
 #footer {
-    margin-top: -10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 14vh;
-    font-weight: 500;
-    background-color: orange;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 12vh;
+  font-weight: 500;
+  background-color: orange;
 }

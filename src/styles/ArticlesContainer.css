@@ -30,4 +30,5 @@
 }
 .tabs.active {
   background-color: white;
+  opacity: 1;
 }

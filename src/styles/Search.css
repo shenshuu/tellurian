@@ -27,14 +27,13 @@
   height: 100px;
   overflow: auto;
   margin-left: 5px;
-  z-index: 999;
 }
 
 .dropItem {
   background-color: white;
   padding: 3px;
   padding-left: 6px;
-  z-index: 10000;
+  z-index: 1;
 }
 
 .dropItem:hover {

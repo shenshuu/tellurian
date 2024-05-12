@@ -14,7 +14,7 @@
   letter-spacing: 10px;
   font-weight: bold;
 }
-.link-box{
+.link-box {
   padding-right: 5vw;
   width: 30vw;
 
@@ -23,7 +23,6 @@
   justify-content: space-between;
   align-items: center;
   margin: 0;
-
 }
 
 #team-link {
@@ -48,8 +47,9 @@
   cursor: pointer;
 }
 
-#home-link:visited, #team-link:visited {
-  color: black; 
+#home-link:visited,
+#team-link:visited {
+  color: black;
 }
 
 .avatar-button:hover {
