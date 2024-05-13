@@ -21,11 +21,10 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
   useEffect(() => {
     fetchAll("united states")
       .then((articles) => {
-        console.log("successfully fetched default articles");
         setArticles(articles);
       })
       .catch((error) => {
-        console.log("unable to fetch default articles");
+        console.error(error);
       });
   }, []);
 
@@ -83,8 +82,6 @@ export const ArticlesContainer = ({ articles, setArticles, userID }) => {
     searchArticles(savedArticles, searchQuery),
     sortCriteria
   );
-
-  //console.log(savedArticles);
 
   return (
     articles && (

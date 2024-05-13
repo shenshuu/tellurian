@@ -5,6 +5,7 @@ import jackieImage from "../assets/avatar_jackie2.jpg";
 import caraImage from "../assets/avatar_cara2.jpg";
 import jeremyImage from "../assets/avatar_jeremy.png";
 import mahelImage from "../assets/avatar_mahel2.jpg";
+import albertImage from "../assets/avatar_albert.jpg";
 
 const MeetTheTeam = () => {
   return (
@@ -41,13 +42,20 @@ const MeetTheTeam = () => {
             jeremya1029@gmail.com
           </p>
         </div>
-        <div className="team-member">
+        {/* <div className="team-member">
           <img src={mahelImage} alt="Team Member 5" />
           <h2>Mahel Napo</h2>
           <p>Full-stack Developer
             mnnap600@gmail.com
           </p>
-        </div>
+        </div> */}
+        {/* <div className="team-member">
+          <img src={albertImage} alt="Team Member 5" />
+          <h2>Albert</h2>
+          <p>Full-stack Developer
+            albert123@gmail.com
+          </p>
+        </div> */}
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export const deleteArticle = (article, userID) => {
             if (article.title === value.title) {
                 const articleToDelete = ref(database, `${userID}/Articles/${key}`)
                 remove(articleToDelete);
-                console.log('article successfully deleted', article);
+                // console.log('article successfully deleted', article);
                 break;
             }
         }
@@ -58,7 +58,7 @@ export const saveArticle = (article, userID) => {
     // saving to realtime database
     push(postRef, article)
       .then((newPostRef) => {
-        console.log('Article successfully saved:', article);
+        // console.log('Article successfully saved:', article);
       })
       .catch((error) => {
         console.error('Error saving article:', error);
